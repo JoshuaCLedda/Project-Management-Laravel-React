@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 export default function Index({ auth, projects }) {
     const projectData = projects?.data || [];
@@ -11,6 +11,13 @@ export default function Index({ auth, projects }) {
             <Head title="Projects" />
 
             <div className="py-12">
+<div>
+<Link href="/project/create" className="text-blue-500 hover:underline">
+        Create Project
+      </Link> 
+
+</div>
+
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">

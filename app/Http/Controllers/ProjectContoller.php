@@ -44,8 +44,10 @@ class ProjectContoller extends Controller
      */
     public function create()
     {
-        //
+        return inertia("Project/Create", [
+        ]);
     }
+    
 
     /**
      * Store a newly created resource in storage.

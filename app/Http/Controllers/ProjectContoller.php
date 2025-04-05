@@ -16,7 +16,7 @@ class ProjectContoller extends Controller
     // public function index()
     // {
     //     $query = Project::query();
-         
+
     //     $projects = $query->paginate(10)->onEachSide(1);
 
     //     // to passs the project we need to pass the variables here
@@ -25,18 +25,35 @@ class ProjectContoller extends Controller
     //     ]);
     // }
 
-
-    // other way to fetch the data
     public function index()
     {
         $query = Project::query();
-        $projects = $query->paginate(10)->onEachSide(1);
-    
+
+        // sorting 
+        $sortField = request("sort_field", 'created_at');
+        $sortDirection = request("sort_direction", "desc");
+
+
+        // and now we can create the query for the input name to be searched
+        if (request("name")) {
+            $query->where("name", "like", "%" . request("name") . "%");
+        }
+        if (request("status")) {
+            $query->where("status", request("status"));
+        }
+
+        $projects = $query
+        // the query params, nakukuah mismo dito ung backend or functionality itself
+        ->orderBy($sortField, $sortDirection)
+        ->paginate(10)->onEachSide(1);
+        
+        // We can pass the query here so that the input search will work
         return inertia("Project/Index", [
-            "projects" => $projects, // Return full pagination response
+            "projects" => ProjectResource::collection($projects),
+            "queryParams" => request()->query() ?: null
         ]);
     }
-    
+
 
 
     /**
@@ -44,10 +61,9 @@ class ProjectContoller extends Controller
      */
     public function create()
     {
-        return inertia("Project/Create", [
-        ]);
+        return inertia("Project/Create", []);
     }
-    
+
 
     /**
      * Store a newly created resource in storage.

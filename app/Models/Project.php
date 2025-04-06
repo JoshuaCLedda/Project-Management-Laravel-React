@@ -9,8 +9,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Project extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProjectFactory> */
     use HasFactory;
+
+    
+    protected $fillable = [
+        'name',
+        'description',
+        'due_date',
+        'status',
+        'image_path',
+        'created_by',
+    ];
 
     public function tasks()
     {
@@ -26,6 +35,4 @@ class Project extends Model
     {
         return $this->belongsTo(User::class, 'updated_by');
     }
-    
-    
 }

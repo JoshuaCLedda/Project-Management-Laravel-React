@@ -1,146 +1,214 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
-import { useState } from 'react';
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import SelectInput from "@/Components/SelectInput";
+import TextInput from "@/Components/TextInput";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Description, Textarea } from "@headlessui/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 
-export default function Create({ auth, projects }) {
-    const [formData, setFormData] = useState({
+export default function Create({ auth }) {
+    const { data, setData, post, errors, reset } = useForm({
+        image: '',
         name: '',
-        description: '',
-        created_at: '',
-        due_date: '',
         status: '',
-        image_path: null,
-    });
+        description: '',
+        due_date: ''
+    })
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
+    // onSubmit or after Clicking the button
+    const onSubmit = (e) => {
+        e.preventDefault()
 
-    const handleFileChange = (e) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            image_path: e.target.files[0],
-        }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Logic for form submission (e.g., calling API or submitting form)
-    };
+        post(route("project.store"))
+    }
 
     return (
         <AuthenticatedLayout
-            header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Create Project</h2>}
-        >
-            <Head title="Create Project" />
+            header={
+                <div className='flex justify-between items-center'>
 
-            <div className="py-10">
-                <div className="max-w-6xl mx-auto bg-white p-4 rounded-lg shadow-md">
-                    <h3 className="text-2xl font-bold mb-6">Create New Project</h3>
+                    <h2 className="text-xl font-semibold leading-tight text-gray-800">Create New Project</h2>
 
-                    <form onSubmit={handleSubmit}>
-                        {/* Name */}
-                        <div className="mb-4">
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Project Name</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                required
-                            />
-                        </div>
-
-                        {/* Description */}
-                        <div className="mb-4">
-                            <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
-                            <textarea
-                                id="description"
-                                name="description"
-                                value={formData.description}
-                                onChange={handleChange}
-                                rows="4"
-                                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                required
-                            ></textarea>
-                        </div>
-
-                        {/* Created At */}
-                        <div className="mb-4">
-                            <label htmlFor="created_at" className="block text-sm font-medium text-gray-700">Created At</label>
-                            <input
-                                type="date"
-                                id="created_at"
-                                name="created_at"
-                                value={formData.created_at}
-                                onChange={handleChange}
-                                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                required
-                            />
-                        </div>
-
-                        {/* Due Date */}
-                        <div className="mb-4">
-                            <label htmlFor="due_date" className="block text-sm font-medium text-gray-700">Due Date</label>
-                            <input
-                                type="date"
-                                id="due_date"
-                                name="due_date"
-                                value={formData.due_date}
-                                onChange={handleChange}
-                                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                required
-                            />
-                        </div>
-
-                        {/* Status */}
-                        <div className="mb-4">
-                            <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status</label>
-                            <select
-                                id="status"
-                                name="status"
-                                value={formData.status}
-                                onChange={handleChange}
-                                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                required
-                            >
-                                <option value="">Select Status</option>
-                                <option value="pending">Pending</option>
-                                <option value="in_progress">In Progress</option>
-                                <option value="completed">Completed</option>
-                            </select>
-                        </div>
-
-                        {/* Image Path */}
-                        <div className="mb-4">
-                            <label htmlFor="image_path" className="block text-sm font-medium text-gray-700">Project Image</label>
-                            <input
-                                type="file"
-                                id="image_path"
-                                name="image_path"
-                                onChange={handleFileChange}
-                                className="mt-1 block w-full text-sm text-gray-500 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                            />
-                        </div>
-
-                        {/* Submit Button */}
-                        <div className="mt-6">
-                            <button
-                                type="submit"
-                                className="w-full px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
-                            >
-                                Create Project
-                            </button>
-                        </div>
-                    </form>
+                    <Link href={route("project.index")} className="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900">
+                        Back
+                    </Link>
                 </div>
+            }
+        >
+
+            <Head title="Create Projects" />
+            <div className="py-12">
+                <div className="mx-auto max-w-10xl sm:px-6 lg:px-12">
+
+
+                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                        <div className="p-6 text-gray-900">
+                            <h1 className="text-xl font-bold mb-4">Projects</h1>
+                            <form onSubmit={onSubmit}
+                                className="p-4 sm:p-8 bg-white "
+                            >
+
+                                {/* image path */}
+                                <div>
+                                    <InputLabel
+                                        htmlFor="project_image_path"
+                                        value="Project Image"
+                                    />
+                                    <pre></pre>
+                                    <TextInput
+                                        id="project_image_path"
+                                        type="file"
+                                        name="image"
+                                        className="mt-1 block w-full"
+                                        onChange={(e) => setData("image", e.target.value)}
+                                    />
+                                    <InputError message={errors.image} className="mt-2" />
+                                </div>
+
+                                {/* name */}
+                                <div>
+                                    <InputLabel
+                                        className="mt-3"
+                                        htmlFor="project_name"
+                                        value="Project Description"
+                                    />
+                                    <TextInput
+                                        id="project_name"
+                                        type="text"
+                                        name="name"
+                                        value={data.name} //this is the data path for the name, in the top and in the laravel
+                                        className="block w-full"
+                                        onChange={(e) => setData("name", e.target.value)}
+                                    />
+                                    <InputError message={errors.name} className="mt-2" />
+                                    {/* validation for the data */}
+                                </div>
+
+
+
+
+                                {/* description */}
+                                <div>
+                                    <InputLabel
+                                        className="mt-3"
+                                        htmlFor="project_description"
+                                        value="Description"
+                                    />
+                                    <Textarea
+                                        id="project_description"
+                                        name="description"
+                                        value={data.description} //this is the data path for the name, in the top and in the laravel
+                                        className="block w-full"
+                                        onChange={(e) => setData("description", e.target.value)}
+                                    />
+                                    <InputError message={errors.description} className="mt-2" />
+                                    {/* validation for the data */}
+                                </div>
+
+
+                                <div>
+                                    <InputLabel
+                                        className="mt-3"
+                                        htmlFor="project_due_date"
+                                        value="Project Due Date"
+                                    />
+
+                                    <TextInput
+                                        id="project_due_date"
+                                        type="date"
+                                        name="due_date"
+                                        value={data.due_date} //this is the data path for the name, in the top and in the laravel
+                                        className="block w-full"
+                                        onChange={(e) => setData("due_date", e.target.value)}
+                                    />
+                                    <InputError message={errors.due_date} className="mt-2" />
+                                    {/* validation for the data */}
+                                </div>
+
+
+                                {/* Status */}
+                                <div>
+
+                                <InputLabel
+                                    className="mt-3"
+                                    htmlFor="project_status"
+                                    value="Status"
+                                />
+
+                                <SelectInput
+                                    id="project_status"
+                                    name="status"
+                                    className="block w-full"
+                                    onChange={(e) => setData("status", e.target.value)}
+                                >
+                                    <option value="">Select Status</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="in_progress">In Progress</option>
+                                    <option value="completed">Completed</option>
+
+                                </SelectInput>
+
+
+                                <InputError message={errors.due_date} className="mt-2" />
+                                {/* validation for the data */}
+                        </div>
+
+
+<div className="mt-4 text-right">
+<Link
+    href={route('project.index')} 
+    className="mx-2 inline-block px-6 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400"
+>
+    Cancel
+</Link>
+<button
+    type="submit"
+    className="inline-block px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+>
+    Submit
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+                    </form>
+
+
+
+                </div>
+
             </div>
-        </AuthenticatedLayout>
-    );
+        </div>
+            </div >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </AuthenticatedLayout >
+
+    )
 }

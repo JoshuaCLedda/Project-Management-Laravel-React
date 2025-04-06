@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -70,42 +69,29 @@ class ProjectContoller extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    
-    //  other way to store
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'description' => 'required|string',
-    //         'due_date' => 'required|date',
-    //         'status' => 'required|in:pending,in_progress,completed',
-    //         'image_path' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-    //     ]);
-
-    //     $imagePath = null;
-    //     if ($request->hasFile('image_path')) {
-    //         $imagePath = $request->file('image_path')->store('projects', 'public');
-    //     }
-
-    //     $project = Project::create([
-    //         'name' => $request->name,
-    //         'description' => $request->description,
-    //         'due_date' => $request->due_date,
-    //         'status' => $request->status,
-    //         'image_path' => $imagePath,
-    //     ]);
-    //     return to_route('project.create')->with('success', 'Project created successfully!');
-    // }
-
-    public function store(StoreProjectRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
-        $image = $data['image'] ?? null;
-        $project = Project::create($data);
-        // if ($image) {
-        //    $data['image_path'] = $image->store('project/'.Str::random(), 'public');
-        // }
-        return to_route('project.index')->with('success','Project Added Succesfully');
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'due_date' => 'required|date',
+            'status' => 'required|in:pending,in_progress,completed',
+            'image_path' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image_path')) {
+            $imagePath = $request->file('image_path')->store('projects', 'public');
+        }
+
+        $project = Project::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'due_date' => $request->due_date,
+            'status' => $request->status,
+            'image_path' => $imagePath,
+        ]);
+        return to_route('project.create')->with('success', 'Project created successfully!');
     }
 
     /**

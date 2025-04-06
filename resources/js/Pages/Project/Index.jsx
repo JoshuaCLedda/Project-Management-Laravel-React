@@ -8,7 +8,7 @@ import { Head, Link, router } from '@inertiajs/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid'
 import TableHeading from '@/Components/TableHeading';
 
-export default function Index({ auth, projects, queryParams = null }) {
+export default function Index({ auth, projects, queryParams = null, success }) {
     const projectData = projects?.data || [];
     queryParams = queryParams || {}
     // Setting up the value here for more data
@@ -41,18 +41,38 @@ export default function Index({ auth, projects, queryParams = null }) {
 
     return (
         <AuthenticatedLayout
-            header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Projects</h2>}
+            header={
+                <div className='flex justify-between items-center'>
+
+                    <h2 className="text-xl font-semibold leading-tight text-gray-800">Projects</h2>
+
+                    <Link href="/project/create" className="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900">
+                        Create Project
+                    </Link>
+                </div>
+
+
+            }
+
+
         >
-            <Head title="Projects" />
+            <Head title="Projects"
+
+            />
+
 
             <div className="py-12">
 
                 <div className="mx-auto max-w-10xl sm:px-6 lg:px-12">
                     <div className='my-4'>
+                        {success && (
 
-                        <Link href="/project/create" className="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900">
-                            Create Project
-                        </Link>
+                            <div className="bg-green-100 text-green-800 p-2 rounded mb-4">
+                                {success}
+                            </div>
+                        )}
+
+
 
                     </div>
 

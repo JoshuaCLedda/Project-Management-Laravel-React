@@ -47,11 +47,13 @@ class ProjectContoller extends Controller
         $projects = $query
             ->orderBy($sortField, $sortDirection)
             ->paginate(10)->onEachSide(1);
-        return inertia("Project/Index", [
+              
+            return inertia("Project/Index", [
             "projects" => ProjectResource::collection($projects),
             "queryParams" => request()->query() ?: null,
             "success" => session('success')
         ]);
+
     }
 
 

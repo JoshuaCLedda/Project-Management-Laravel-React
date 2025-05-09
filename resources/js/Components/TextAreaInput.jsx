@@ -1,8 +1,8 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 
 export default forwardRef(function TextAreaInput(
-    { type = 'text', className = '', isFocused = false, children, ...props},
-    ref,
+    { className = "", isFocused = false, children, ...props },
+    ref
 ) {
     const localRef = useRef(null);
 
@@ -19,13 +19,16 @@ export default forwardRef(function TextAreaInput(
     return (
         <textarea
             {...props}
-            type={type}
+            ref={localRef}
             className={
-                'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 ' +
-                className
+                `mt-1 block w-full text-sm text-gray-900 
+                    px-4 py-2 border border-gray-400 rounded-lg 
+                    focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent 
+                    hover:border-gray-500 transition-all duration-150 ease-in-out 
+                    shadow-sm resize-y ` + className
             }
-            ref={localRef}>
-                {children}
-            </textarea>
+        >
+            {children}
+        </textarea>
     );
 });

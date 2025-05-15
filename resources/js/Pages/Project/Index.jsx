@@ -60,24 +60,38 @@ export default function Index({ auth, projects, queryParams = null, success }) {
         >
             <Head title="Projects" />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-10xl sm:px-6 lg:px-12">
-                    <div className="my-4">
-                        {success && (
-                            <div className="bg-green-100 text-green-800 p-2 rounded mb-4">
-                                {success}
-                            </div>
-                        )}
-                    </div>
+         <div className="py-12">
+                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    {/* Success Alert */}
+                    {success && (
+                        <div className="mb-4 rounded bg-green-100 px-4 py-2 text-green-800">
+                            {success}
+                        </div>
+                    )}
+
 
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <h1 className="text-xl font-bold mb-4">Projects</h1>
 
+
+                                <div className="mb-6 flex items-center justify-between">
+                                <h1 className="text-2xl font-bold text-gray-800">
+                                    Project List
+                                </h1>
+                                {/* Optional: Filter/Search Placeholder */}
+                                <input
+                                    type="text"
+                                    placeholder="Search tasks..."
+                                    className="rounded border border-gray-300 px-3 py-1.5 text-sm focus:border-indigo-500 focus:outline-none"
+                                />
+                            </div>
+
+                       
                             {projectData.length > 0 ? (
-                                <table className="min-w-full border-collapse">
-                                    <thead className="bg-gray-100">
-                                        <tr className="text-left text-sm font-semibold text-gray-700">
+                                <div className="overflow-x-auto">
+                             <table className="min-w-full divide-y divide-gray-200 text-sm">
+                                   <thead className="bg-gray-100 text-left font-semibold text-gray-700">
+                                             <tr>
                                             {/* ID Column */}
                                             <TableHeading
                                                 name="id"
@@ -291,6 +305,7 @@ export default function Index({ auth, projects, queryParams = null, success }) {
                                         ))}
                                     </tbody>
                                 </table>
+                                </div>
                             ) : (
                                 // Pagination
                                 <p>No projects found.</p>
@@ -302,6 +317,8 @@ export default function Index({ auth, projects, queryParams = null, success }) {
                     </div>
                 </div>
             </div>
+
+            
         </AuthenticatedLayout>
     );
 }

@@ -1,17 +1,11 @@
 import Pagination from "@/Components/Pagination";
-import {
-    PROJECT_STATUS_CLASS_MAP,
-    PROJECT_STATUS_TEXT_MAP,
-    TASK_PRIORITY_CLASS_MAP,
-    TASK_PRIORITY_TEXT_MAP,
-} from "@/constants";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function Index({ auth, tasks, queryParams = null, success }) {
+export default function Index({ auth, users, queryParams = null, success }) {
     // to fetch the data we need those function
     // we only need this and the backend from the controller
-    const taskData = tasks.data || [];
+    const userData = users.data || [];
 
     return (
         <AuthenticatedLayout
@@ -25,7 +19,7 @@ export default function Index({ auth, tasks, queryParams = null, success }) {
                         href="#"
                         className="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900"
                     >
-                        Create Task
+                        Create User
                     </Link>
                 </div>
             }
@@ -41,7 +35,6 @@ export default function Index({ auth, tasks, queryParams = null, success }) {
                         </div>
                     )}
 
-           
                     <div className="overflow-hidden rounded-lg bg-white shadow">
                         <div className="p-6 text-gray-900">
                             {/* Header */}
@@ -59,16 +52,16 @@ export default function Index({ auth, tasks, queryParams = null, success }) {
 
                             {/* Table */}
                             <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-gray-200 text-sm">
-                                   <thead className="bg-gray-100 text-left font-semibold text-gray-700">
+                                <table className="min-w-full divide-y divide-gray-200 text-sm">
+                                    <thead className="bg-gray-100 text-left font-semibold text-gray-700">
                                         <tr>
-                                            <th className="border p-2 cursor-pointer">Name</th>
+                                            <th className="border p-2 cursor-pointer">
+                                                Name
+                                            </th>
                                             <th className="border p-2 cursor-pointer">
                                                 Description
                                             </th>
-                                            <th className="border p-2 cursor-pointer">
-                                                Status
-                                            </th>
+
                                             <th className="border p-2 cursor-pointer">
                                                 Priority
                                             </th>
@@ -78,53 +71,23 @@ export default function Index({ auth, tasks, queryParams = null, success }) {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-100">
-                                        {taskData.length > 0 ? (
-                                            taskData.map((task) => (
+                                        {userData.length > 0 ? (
+                                            userData.map((users) => (
                                                 <tr
-                                                    key={task.id}
+                                                    key={users.id}
                                                     className="hover:bg-gray-50 transition-colors"
                                                 >
                                                     <td className="px-4 py-2">
-                                                        {task.name}
+                                                        {users.name}
                                                     </td>
                                                     <td className="px-4 py-2 text-gray-600">
-                                                        {task.description ||
+                                                        {users.email ||
                                                             "-"}
                                                     </td>
-                                                    <td className="px-4 py-2">
-                                                        <span
-                                                            className={`inline-block rounded px-2 py-1 text-xs font-medium text-white ${
-                                                                PROJECT_STATUS_CLASS_MAP[
-                                                                    task.status
-                                                                ]
-                                                            }`}
-                                                        >
-                                                            {
-                                                                PROJECT_STATUS_TEXT_MAP[
-                                                                    task.status
-                                                                ]
-                                                            }
-                                                        </span>
-                                                    </td>
-                                                    <td className="px-4 py-2">
-                                                        <span
-                                                            className={`inline-block rounded px-2 py-1 text-xs font-medium text-white ${
-                                                                TASK_PRIORITY_CLASS_MAP[
-                                                                    task
-                                                                        .priority
-                                                                ]
-                                                            }`}
-                                                        >
-                                                            {
-                                                                TASK_PRIORITY_TEXT_MAP[
-                                                                    task
-                                                                        .priority
-                                                                ]
-                                                            }
-                                                        </span>
-                                                    </td>
+
+                                                 
                                                     <td className="px-4 py-2 text-gray-600">
-                                                        {task.due_date || "-"}
+                                                        {users.created_at || "-"}
                                                     </td>
                                                 </tr>
                                             ))
@@ -144,7 +107,7 @@ export default function Index({ auth, tasks, queryParams = null, success }) {
 
                             {/* Pagination */}
                             <div className="mt-6">
-                                <Pagination links={tasks.meta.links} />
+                                <Pagination links={users.meta.links} />
                             </div>
                         </div>
                     </div>

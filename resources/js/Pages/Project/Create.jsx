@@ -54,17 +54,21 @@ export default function Create({ auth }) {
             }
         >
             <Head title="Create Projects" />
+
+
             <div className="py-12">
-                <div className="mx-auto max-w-10xl sm:px-6 lg:px-12">
+               <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
+                        <div className="p-4 text-gray-900">
                             <h1 className="px-8 text-xl font-bold">Projects</h1>
-                            <div className="mx-8">
+                          
+                            {/* <div className="mx-8">
                                 <Alert />
-                            </div>
+                            </div> */}
+                       
                             <form
                                 onSubmit={onSubmit}
-                                className="p-4 sm:p-8 bg-white "
+                                className="p-2 sm:p-8 bg-white "
                             >
                                 {/* image path */}
                                 <div>

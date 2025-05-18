@@ -9,9 +9,9 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/16/solid";
 import TableHeading from "@/Components/TableHeading";
 
 export default function Index({ auth, projects, queryParams = null, success }) {
-   
+
     const projectData = projects?.data || [];
-    
+
     queryParams = queryParams || {};
     // Setting up the value here for more data
     const searchFieldChanged = (name, value) => {
@@ -60,24 +60,17 @@ export default function Index({ auth, projects, queryParams = null, success }) {
         >
             <Head title="Projects" />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-10xl sm:px-6 lg:px-12">
-                    <div className="my-4">
-                        {success && (
-                            <div className="bg-green-100 text-green-800 p-2 rounded mb-4">
-                                {success}
-                            </div>
-                        )}
-                    </div>
 
+
+            <div className="py-12">
+                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <h1 className="text-xl font-bold mb-4">Projects</h1>
 
                             {projectData.length > 0 ? (
-                                <table className="min-w-full border-collapse">
+                                <table className="min-w-full divide-y divide-gray-200">
                                     <thead className="bg-gray-100">
-                                        <tr className="text-left text-sm font-semibold text-gray-700">
+                                        <tr>
                                             {/* ID Column */}
                                             <TableHeading
                                                 name="id"
@@ -94,7 +87,7 @@ export default function Index({ auth, projects, queryParams = null, success }) {
 
                                             {/* Name Column with custom sort icon */}
                                             <th
-                                                className="border p-2 cursor-pointer"
+                                                className="px-4 py-2 text-left text-sm font-semibold text-gray-700"
                                                 onClick={() =>
                                                     sortChanged("name")
                                                 }
@@ -104,7 +97,7 @@ export default function Index({ auth, projects, queryParams = null, success }) {
                                                     {queryParams.sort_field ===
                                                         "name" &&
                                                         (queryParams.sort_direction ===
-                                                        "asc" ? (
+                                                            "asc" ? (
                                                             <ChevronUpIcon className="w-4 h-4 text-gray-500" />
                                                         ) : (
                                                             <ChevronDownIcon className="w-4 h-4 text-gray-500" />
@@ -113,7 +106,7 @@ export default function Index({ auth, projects, queryParams = null, success }) {
                                             </th>
 
                                             <th
-                                                className="border p-2 cursor-pointer"
+                                                className="px-4 py-2 text-left text-sm font-semibold text-gray-700"
                                                 onClick={() =>
                                                     sortChanged("created_at")
                                                 }
@@ -123,7 +116,7 @@ export default function Index({ auth, projects, queryParams = null, success }) {
                                                     {queryParams.sort_field ===
                                                         "created_at" &&
                                                         (queryParams.sort_direction ===
-                                                        "asc" ? (
+                                                            "asc" ? (
                                                             <ChevronUpIcon className="w-4 h-4 text-gray-500" />
                                                         ) : (
                                                             <ChevronDownIcon className="w-4 h-4 text-gray-500" />
@@ -132,7 +125,7 @@ export default function Index({ auth, projects, queryParams = null, success }) {
                                             </th>
 
                                             <th
-                                                className="border p-2 cursor-pointer"
+                                                className="px-4 py-2 text-left text-sm font-semibold text-gray-700"
                                                 onClick={() =>
                                                     sortChanged("due_date")
                                                 }
@@ -142,7 +135,7 @@ export default function Index({ auth, projects, queryParams = null, success }) {
                                                     {queryParams.sort_field ===
                                                         "due_date" &&
                                                         (queryParams.sort_direction ===
-                                                        "asc" ? (
+                                                            "asc" ? (
                                                             <ChevronUpIcon className="w-4 h-4 text-gray-500" />
                                                         ) : (
                                                             <ChevronDownIcon className="w-4 h-4 text-gray-500" />
@@ -151,7 +144,7 @@ export default function Index({ auth, projects, queryParams = null, success }) {
                                             </th>
 
                                             <th
-                                                className="border p-2 cursor-pointer"
+                                                className="px-4 py-2 text-left text-sm font-semibold text-gray-700"
                                                 onClick={() =>
                                                     sortChanged("status")
                                                 }
@@ -161,7 +154,7 @@ export default function Index({ auth, projects, queryParams = null, success }) {
                                                     {queryParams.sort_field ===
                                                         "status" &&
                                                         (queryParams.sort_direction ===
-                                                        "asc" ? (
+                                                            "asc" ? (
                                                             <ChevronUpIcon className="w-4 h-4 text-gray-500" />
                                                         ) : (
                                                             <ChevronDownIcon className="w-4 h-4 text-gray-500" />
@@ -193,6 +186,7 @@ export default function Index({ auth, projects, queryParams = null, success }) {
                                                     }
                                                     onKeyPress={(e) =>
                                                         onKeyPress("name", e)
+
                                                     }
                                                 />
                                             </th>
@@ -233,59 +227,54 @@ export default function Index({ auth, projects, queryParams = null, success }) {
                                         </tr>
                                     </thead>
 
-                                    <tbody>
+                                    <tbody className="divide-y divide-gray-200">
                                         {projectData.map((project) => (
                                             <tr key={project.id}>
-                                                <td className="border p-2">
+                                                <td className="px-4 py-2 text-sm text-gray-800">
                                                     {project.id}
                                                 </td>
-                                                <td className="border p-2">
+                                                <td className="px-4 py-2 text-sm text-gray-800">
                                                     {project.name}
                                                 </td>
-                                                <td className="border p-2">
+                                                <td className="px-4 py-2 text-sm text-gray-800">
                                                     {project.created_at}
                                                 </td>
-                                                <td className="border p-2">
+                                                <td className="px-4 py-2 text-sm text-gray-800">
                                                     {project.due_date}
                                                 </td>
-                                                <td className="border p-2">
+                                                <td className="px-4 py-2 text-sm text-gray-800">
                                                     <span
                                                         className={
                                                             "px-2 py-1 rounded text-white " +
                                                             PROJECT_STATUS_CLASS_MAP[
-                                                                project.status
+                                                            project.status
                                                             ]
                                                         }
                                                     >
                                                         {
                                                             PROJECT_STATUS_TEXT_MAP[
-                                                                project.status
+                                                            project.status
                                                             ]
                                                         }
                                                     </span>
                                                 </td>
 
-                                                <td className="border p-2 text-center">
-                                                    <div className="flex justify-center items-center gap-2">
-                                                        <Link
-                                                            href={route(
-                                                                "project.edit",
-                                                                project.id
-                                                            )}
-                                                            className="px-4 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition"
-                                                        >
-                                                            Edit
-                                                        </Link>
-                                                        <Link
-                                                            href={route(
-                                                                "project.destroy",
-                                                                project.id
-                                                            )}
-                                                            className="px-4 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition"
-                                                        >
-                                                            Delete
-                                                        </Link>
-                                                    </div>
+                                                <td className="px-4 py-2 text-sm text-gray-800 text-center">
+                                                <div className="flex justify-center items-center gap-2">
+    <Link
+        href={route("project.edit", project.id)}
+        className="px-2 py-0.5 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition"
+    >
+        Edit
+    </Link>
+    <Link
+        href={route("project.destroy", project.id)}
+        className="px-2 py-0.5 bg-red-600 text-white text-xs rounded hover:bg-red-700 transition"
+    >
+        Delete
+    </Link>
+</div>
+
                                                 </td>
                                             </tr>
                                         ))}

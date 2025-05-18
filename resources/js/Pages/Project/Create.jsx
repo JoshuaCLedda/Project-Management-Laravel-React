@@ -1,3 +1,4 @@
+import FileInput from "@/Components/FileInput";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import SelectInput from "@/Components/SelectInput";
@@ -55,13 +56,16 @@ export default function Create({ auth }) {
                                         value="Project Image"
                                     />
                                     <pre></pre>
-                                    <TextInput
-                                        id="project_image_path"
-                                        type="file"
-                                        name="image"
-                                        className="mt-1 block w-full"
-                                        onChange={(e) => setData("image", e.target.value)}
-                                    />
+
+<FileInput
+    name="image"
+    accept="image/*"
+    isFocused={true}
+    className="mb-4"
+    onChange={(e) => setData("image", e.target.value)}
+
+/>
+
                                     <InputError message={errors.image} className="mt-2" />
                                 </div>
 

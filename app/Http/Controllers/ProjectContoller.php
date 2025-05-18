@@ -35,7 +35,7 @@ class ProjectContoller extends Controller
         // sorting function
         $sortField = request("sort_field", 'created_at');
         $sortDirection = request("sort_direction", "desc");
-        
+
 
         if (request("name")) {
             $query->where("name", "like", "%" . request("name") . "%");
@@ -47,8 +47,8 @@ class ProjectContoller extends Controller
         $projects = $query
             ->orderBy($sortField, $sortDirection)
             ->paginate(10)->onEachSide(1);
-              
-            return inertia("Project/Index", [
+
+        return inertia("Project/Index", [
             "projects" => ProjectResource::collection($projects),
             "queryParams" => request()->query() ?: null,
             "success" => session('success')
@@ -72,7 +72,7 @@ class ProjectContoller extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    
+
     //  other way to store
     // public function store(Request $request)
     // {
@@ -101,13 +101,15 @@ class ProjectContoller extends Controller
 
     public function store(StoreProjectRequest $request)
     {
+
         $data = $request->validated();
         $image = $data['image'] ?? null;
         $project = Project::create($data);
         // if ($image) {
         //    $data['image_path'] = $image->store('project/'.Str::random(), 'public');
         // }
-        return to_route('project.index')->with('success','Project Added Succesfully');
+        return to_route('project.index')->with('success', 'Project Added Succesfully');
+
     }
 
     /**

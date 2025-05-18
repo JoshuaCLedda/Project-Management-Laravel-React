@@ -20,7 +20,7 @@ class TaskResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-'description' => Str::words($this->description, 10),
+            'description' => Str::words($this->description, 10),
             'status' => $this->status,
             'priority' => $this->priority,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d'),
